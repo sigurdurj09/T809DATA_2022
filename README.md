@@ -1,6 +1,6 @@
 # T-809-DATA exercises
 
-This repository contains exercises and supporting code for the course T-809-SPST at Reykjavik University. The assignments in the course are computer assignments and require at least some foundational knowledge in Python. All the assignments are written for Python and together require only one _virtual environment_ for requirements. See the installation section for more information on that and best practices.
+This repository contains exercises and supporting code for the course T-809-DATA at Reykjavik University. The assignments in the course are computer assignments and require at least some foundational knowledge in Python. All the assignments are written for Python and together require only one _virtual environment_ for requirements. See the installation section for more information on that and best practices.
 
 
 ## Modules
