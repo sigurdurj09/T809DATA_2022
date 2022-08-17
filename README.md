@@ -6,6 +6,8 @@ This repository contains exercises and supporting code for the course T-809-DATA
 ## Modules
 The repository contains the followorkng modules:
 * Assignment 0: [Introduction](00_introduction/README.md)
+* Assignment 1: [Decision Trees](01_decision_trees/README.md)
+* Assignment 2: [K-Nearest Neighbors](02_nearest_neighbours/README.md)
 
 We will add modules gradually throughout the course.
 
