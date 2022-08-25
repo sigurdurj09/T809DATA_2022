@@ -1,9 +1,9 @@
 # Author: Sigurður Ágúst Jakobsson
-# Date:
+# Date: 25.08.22
 # Project: Assignment 1 - Decision Trees
 # Acknowledgements: 
-#
-
+# Material and numpy examples from class
+# Numpy, scikit and matlib plot docs online, with some generic syntax review online as well.
 
 from typing import Union
 import matplotlib.pyplot as plt

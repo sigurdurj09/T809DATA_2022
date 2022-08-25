@@ -1,5 +1,5 @@
 import tools as tools
-import solution as sol
+import solution01 as sol
 import numpy as np
 
 print('Test 1.1')
