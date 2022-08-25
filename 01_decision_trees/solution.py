@@ -161,19 +161,47 @@ class IrisTreeTrainer:
     def accuracy(self):
         return self.tree.score(self.test_features, self.test_targets)
 
-"""
-
     def plot(self):
-        ...
+        plot = plot_tree(self.tree)        
+        plt.show()
 
     def plot_progress(self):
         # Independent section
         # Remove this method if you don't go for independent section.
-        ...
+        
+        #Create accuracy array to use later
+        sample_qty = self.train_features.shape[0]
+        accuracy_array = np.zeros((2,sample_qty))
+
+        #Start stepwise training
+        for index in range(1, sample_qty+1):
+            self.tree.fit(self.train_features[0:index,:], self.train_targets[0:index])
+            accuracy_array[0, index-1] = index
+            accuracy_array[1, index-1] = self.accuracy()
+
+        #Plot results
+        fig, axis = plt.subplots()
+        axis.plot(accuracy_array[0,:], accuracy_array[1,:])
+        axis.set(xlabel='Samples', ylabel='Accuracy (%)', title='Stepwise Training')
+        axis.grid()
+
+        fig.show()        
 
     def guess(self):
-        ...
+        return self.tree.predict(self.test_features)
 
     def confusion_matrix(self):
-        ...
-"""
+        #Calculate and initiate matrix size from variable class lengths
+        D = len(self.classes)
+        confusion_matrix = np.zeros((D,D), dtype=int)
+
+        #Get necessary data
+        predictions = self.guess()
+
+        #Fill in matrix
+        for index in range(len(predictions)):
+            confusion_matrix[self.test_targets[index], predictions[index]] += 1
+
+        #Ugly return without labels but if converted to print string with labels its less usable as array output.
+        #Rows = actual, Columns = predictions - other scope should put labels to it for better printing.
+        return confusion_matrix

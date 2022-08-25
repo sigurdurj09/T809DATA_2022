@@ -32,9 +32,11 @@ features, targets, classes = tools.load_iris()
 dt = sol.IrisTreeTrainer(features, targets, classes=classes)
 dt.train()
 print(f'The accuracy is: {dt.accuracy()}')
-"""
 dt.plot()
 print(f'I guessed: {dt.guess()}')
 print(f'The true targets are: {dt.test_targets}')
 print(dt.confusion_matrix())
-"""
+
+features, targets, classes = tools.load_iris()
+dt = sol.IrisTreeTrainer(features, targets, classes=classes, train_ratio=0.6)
+dt.plot_progress()
