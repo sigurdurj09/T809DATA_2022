@@ -1,10 +1,12 @@
 # Author: Sigurður Ágúst Jakobsson
-# Date:
+# Date: 25.08.22
 # Project: Assignment 2 - K-Nearest Neighbours
 # Acknowledgements: 
 # Used base code from tools.plot points in knn_plot_points.
+# Material and numpy examples from class
+# Numpy, scikit and matlib plot docs online, with some generic syntax review online as well.
 
-from turtle import distance
+from turtle import color, distance
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -183,9 +185,22 @@ def weighted_vote(
     Given a list of nearest targets, vote for the most
     popular
     '''
-    # Remove if you don't go for independent section
-    ...
+    #Result array
+    class_qty = len(classes)
+    result_array = np.zeros(class_qty)
 
+    #Vector operations on sums
+    c_j = 1 / distances
+    sum_c_j = c_j.sum()
+    c_j_over_sum = c_j / sum_c_j
+    
+    #Iterate the classes and find the one with most matches
+    for index, class_instance in enumerate(classes):
+        weight = ((targets == class_instance)*c_j_over_sum).sum()
+        result_array[index] = weight
+        
+    #Get index of largest weight and return associated class
+    return classes[np.argsort(result_array)[-1]]
 
 def wknn(
     x: np.ndarray,
@@ -197,9 +212,11 @@ def wknn(
     '''
     Combine k_nearest and vote
     '''
-    # Remove if you don't go for independent section
-    ...
-
+    k_nearest_indexes = k_nearest(x, points, k)
+    class_values = point_targets[k_nearest_indexes]
+    distances = euclidian_distances(x, points[k_nearest_indexes])
+    
+    return weighted_vote(class_values, distances, classes)
 
 def wknn_predict(
     points: np.ndarray,
@@ -207,14 +224,50 @@ def wknn_predict(
     classes: list,
     k: int
 ) -> np.ndarray:
-    # Remove if you don't go for independent section
-    ...
+    
+    #Initialize return vector
+    prediction_vector = []
+    
+    #Concatanate points and test them, adding to vector.
+    for index in range(points.shape[0]):
+        test_x = points[index]
+        test_points = np.concatenate((points[0:index], points[index+1:]))
+        test_targets = np.concatenate((point_targets[0:index], point_targets[index+1:]))
 
+        prediction_vector.append(wknn(test_x, test_points, test_targets, classes, k))
+
+    return np.array(prediction_vector)
 
 def compare_knns(
     points: np.ndarray,
     targets: np.ndarray,
     classes: list
 ):
-    # Remove if you don't go for independent section
-    ...
+
+    k = 30
+    n = points.shape[0]
+    k_i = np.arange(1, k+1)
+    knn_accuracy_vector = np.zeros(k)
+    wknn_accuracy_vector = np.zeros(k)
+
+    #Get predictions for different ks
+    for k_I in k_i:
+        knn_prediction = knn_predict(points, targets, classes, k_I)
+        wknn_prediction = wknn_predict(points, targets, classes, k_I)
+    
+        #Compare targets to predictions
+        knn_hits = (targets == knn_prediction).sum()
+        wknn_hits = (targets == wknn_prediction).sum()
+
+        knn_accuracy_vector[k_I - 1] = knn_hits / n
+        wknn_accuracy_vector[k_I - 1] = wknn_hits / n
+
+    #Plot results
+    fig, axis = plt.subplots()
+    axis.plot(k_i, knn_accuracy_vector, color='blue', label='Knn')
+    axis.plot(k_i, wknn_accuracy_vector, color='red', label='wKnn')
+    axis.set(xlabel='k', ylabel='Accuracy (%)', title='Knn vs. wKnn')
+    axis.legend()
+    axis.grid()
+
+    fig.show()  

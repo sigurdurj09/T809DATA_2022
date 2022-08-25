@@ -50,7 +50,22 @@ print('Test 2.5')
 sol.knn_plot_points(d, t, classes, 3)
 
 print('Independent Tests')
+
 print('Test B.1')
+neighbors = sol.k_nearest(x, points, 9)
+targets = point_targets[neighbors]
+distances = sol.euclidian_distances(x, points[neighbors])
+print(sol.vote(targets, classes))
+print(sol.weighted_vote(targets, distances, classes))
+
 print('Test B.2')
+print(sol.wknn(x, points, point_targets, classes, 1))
+print(sol.wknn(x, points, point_targets, classes, 5))
+print(sol.wknn(x, points, point_targets, classes, 150))
+
 print('Test B.3')
+print(sol.wknn_predict(d_test, t_test, classes, 10))
+print(sol.wknn_predict(d_test, t_test, classes, 5))
+
 print('Test B.4')
+sol.compare_knns(d_test, t_test, classes)
