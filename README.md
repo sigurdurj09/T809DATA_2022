@@ -16,7 +16,7 @@ We will add modules gradually throughout the course.
 ### Installing Requirements
 All the code in this repository is written in Python and **requires Python 3** (any version after 3.6.9 should be ok). The recommended approach is to create a python virtual environment:
 * Create the virtual environment with one of the following:
-    * macOS/Linux: `python3 -m venv env` or `virtualenv -p python3 ..env`
+    * macOS/Linux: `python3 -m venv env` or `virtualenv -p python3 env`
     * Windows: `python -m venv ./env` or `py -3 -m venv .env`
     * Note: Make sure that `python3` or `python` points to Python3.7+ interpreter. You can run `python3 --version` to see which version you are running. All python installations should be listed by running e.g. `ls usr/bin/python`. You can also use VS Code to discover all python interpreters on your OS, see the next section.
 * Activate it with `source env/bin/activate` if you are in the project directory. Otherwise you do `source /path/to/your/environment/bin/activate`.
