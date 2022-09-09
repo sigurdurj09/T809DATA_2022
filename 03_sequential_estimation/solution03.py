@@ -41,7 +41,7 @@ def update_sequence_mean(
 
 def _plot_sequence_estimate():
     
-    data = gen_data(100, 3, np.array([0, 1, -1]), 3**0.5)
+    data = gen_data(100, 3, np.array([0, 1, -1]), 3**0.25)
     estimates = [np.array([0, 0, 0])]
     
     #Create estimates vector to plot
@@ -63,7 +63,7 @@ def _square_error(y, y_hat):
 
 def _plot_mean_square_error():
     y = np.array([0, 1, -1])
-    data = gen_data(100, 3, y, 3**0.5)
+    data = gen_data(100, 3, y, 3**0.25)
     estimates = [np.array([0, 0, 0])]
     square_errors = []
     
@@ -121,7 +121,7 @@ def gen_changing_data(
     return np.array(ret_array)
 
 def _plot_changing_sequence_estimate():
-    data = gen_changing_data(500, 3, np.array([0, 1, -1]), np.array([1, -1, 0]), 3**0.5)
+    data = gen_changing_data(500, 3, np.array([0, 1, -1]), np.array([1, -1, 0]), 3**0.25)
     estimates = [np.array([0, 0, 0])]
     
     gen_data = data[1]
