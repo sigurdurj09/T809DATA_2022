@@ -1,10 +1,11 @@
 # Author: Sigurður Ágúst Jakobsson
-# Date:
+# Date: 09.09.22
 # Project: Classification Based on Probability
 # Acknowledgements: 
 # For review of precision and recall: https://towardsdatascience.com/accuracy-recall-precision-f-score-specificity-which-to-optimize-on-867d3f11124
-#
-
+# Code from help to see how SciPy works
+# I discussed the project, programming best practices and theory with Gylfi Andrésson and Sigríður Borghildur Jónsdóttir
+# Otherwise general tips from class, looking at syntax tips online and in package documentation, and looking at given example code.
 
 from tools import load_iris, split_train_test
 

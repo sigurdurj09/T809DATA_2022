@@ -16,27 +16,27 @@ print('Test 1.2')
 
 np.random.seed(1234)
 X = sol.gen_data(300, 3, np.array([0, 1, -1]), 3**0.25)
-#tools.bar_per_axis(X)
+tools.bar_per_axis(X)
 test_3_m = X.mean(0)
 
 np.random.seed(1234)
 test_3_high_n = sol.gen_data(3000, 3, np.array([0, 1, -1]), 3**0.25)
-#tools.bar_per_axis(test_3_high_n)
+tools.bar_per_axis(test_3_high_n)
 test_3_m_high_n = test_3_high_n.mean(0)
 
 np.random.seed(1234)
 test_3_low_n = sol.gen_data(30, 3, np.array([0, 1, -1]), 3**0.25)
-#tools.bar_per_axis(test_3_low_n)
+tools.bar_per_axis(test_3_low_n)
 test_3_m_low_n = test_3_low_n.mean(0)
 
 np.random.seed(1234)
 test_3_high_cov = sol.gen_data(300, 3, np.array([0, 1, -1]), 3**1)
-#tools.bar_per_axis(test_3_high_cov)
+tools.bar_per_axis(test_3_high_cov)
 test_3_m_high_cov = test_3_high_cov.mean(0)
 
 np.random.seed(1234)
 test_3_low_cov = sol.gen_data(300, 3, np.array([0, 1, -1]), 3**0.1)
-#tools.bar_per_axis(test_3_low_cov)
+tools.bar_per_axis(test_3_low_cov)
 test_3_m_low_cov = test_3_low_cov.mean(0)
 
 print('Means')
