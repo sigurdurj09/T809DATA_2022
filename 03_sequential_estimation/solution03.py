@@ -1,9 +1,10 @@
 # Author: Sigurður Ágúst Jakobsson
-# Date:
+# Date: 09.09.22
 # Project: Sequential Estimation
 # Acknowledgements: 
-#
-
+# I discussed the project, programming best practices and theory with Gylfi Andrésson and Sigríður Borghildur Jónsdóttir
+# Got idea to try to implement a moving average from Investopedia https://www.investopedia.com/terms/s/sma.asp
+# Otherwise general tips from class, looking at syntax tips online and in package documentation, and looking at given example code.
 
 from tools import scatter_3d_data, bar_per_axis
 
