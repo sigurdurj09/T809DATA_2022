@@ -111,7 +111,9 @@ def train_simple_model():
             # for sample i.
             out = model(feature)
             # Calculate the loss for the current batch
+
             loss = loss_metric(out, target.int())
+
             # To perform the backward propagation we do:
             loss.backward()
             # The optimizer then tunes the weights of the model
