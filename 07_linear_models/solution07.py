@@ -1,8 +1,11 @@
 # Author: Sigurður Ágúst Jakobsson
-# Date:
+# Date: 09.10.22
 # Project: Linear Models for Regression
 # Acknowledgements: 
 # Given plotting code from project 3 as a base for project 2
+# Tips from Piazza and class
+# Documentation of pyplot online
+# Discussions of ideas on solutions with Gylfi Andrésson and Sigríður Borghildur Jónsdóttir
 
 # NOTE: Your code should NOT contain any main functions or code that is executed
 # automatically.  We ONLY want the functions as stated in the README.md.
@@ -292,6 +295,7 @@ def _plot_mu(mu):
     ydata = mu[:,1]
     zdata = mu[:,2]
 
+    fig, ax = plt.subplots() 
     ax = plt.axes(projection='3d')
     ax.scatter3D(xdata, ydata, zdata, c=zdata, cmap='Greens')
     plt.show()

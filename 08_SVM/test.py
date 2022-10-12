@@ -37,7 +37,7 @@ sol.SVM_compare(True)
 
 
 print('Test Independent')
-sol.bball_data_analysis()
+#sol.bball_data_analysis()
 
 
 

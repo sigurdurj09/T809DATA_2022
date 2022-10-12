@@ -1,8 +1,8 @@
 # Author: Sigurður Ágúst Jakobsson
-# Date:
+# Date: 09.10.22
 # Project: Support Vector Machines
 # Acknowledgements: 
-#
+# Documentation of sklearn modules
 
 # NOTE: Your code should NOT contain any main functions or code that is executed
 # automatically.  We ONLY want the functions as stated in the README.md.
