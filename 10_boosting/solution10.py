@@ -1,8 +1,9 @@
 # Author: Sigurður Ágúst Jakobsson
-# Date:
+# Date: 23.10.22
 # Project: Boosting
 # Acknowledgements: 
-#
+# Sklearn, Kaggle and other library documentation online
+# Discussed solution strategies with Gylfi Andrésson
 
 # NOTE: Your code should NOT contain any main functions or code that is executed
 # automatically.  We ONLY want the functions as stated in the README.md.
@@ -11,13 +12,14 @@
 
 from cmath import nan
 import os
+from tkinter import Grid
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import (train_test_split, RandomizedSearchCV)
+from sklearn.model_selection import (train_test_split, RandomizedSearchCV, GridSearchCV)
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.metrics import (confusion_matrix, accuracy_score, recall_score, precision_score)
 
@@ -132,9 +134,9 @@ def param_search(X, y):
     '''
     # Create the parameter grid
     gb_param_grid = {
-        'n_estimators': [96, 98, 100],
-        'max_depth': [2, 3, 5, 7],
-        'learning_rate': [0.08, 0.10, 0.12, 0.14]}
+        'n_estimators': [67, 68, 69],
+        'max_depth': [4, 5, 6, 7],
+        'learning_rate': [0.095, 0.096, 0.097, 0.098, 0.099, 0.100, 0.101, 0.102]}
     # Instantiate the regressor
     gb = GradientBoostingClassifier()
     # Perform random search
@@ -164,7 +166,7 @@ def gb_optimized_train_test(X_train, t_train, X_test, t_test):
     predictions = gb_classifier.predict(X_test)
 
     accuracy = accuracy_score(t_test, predictions)
-    precision =precision_score(t_test, predictions)
+    precision = precision_score(t_test, predictions)
     recall = recall_score(t_test, predictions)
 
     return (accuracy, precision, recall)
@@ -175,6 +177,61 @@ def _create_submission():
     '''
     (tr_X, tr_y), (tst_X, tst_y), submission_X = get_better_titanic()
     params = param_search(tr_X, tr_y)
+    gb_classifier = GradientBoostingClassifier(n_estimators=params['n_estimators'], max_depth=params['max_depth'], learning_rate=params['learning_rate'])
+    gb_classifier.fit(tr_X, tr_y)
+
+    prediction = gb_classifier.predict(submission_X)
+
+    build_kaggle_submission(prediction)
+
+def param_search_upd(X, y):
+    '''
+    Perform randomized parameter search on the
+    gradient boosting classifier on the dataset (X, y)
+    '''
+    # Create the parameter grid
+    gb_param_grid = {
+        'n_estimators': list(range(50, 70, 1)),
+        'max_depth': list(range(4, 10, 1)),
+        'learning_rate': [0.095, 0.096, 0.097, 0.098, 0.099, 0.100, 0.101, 0.102]}
+    # Instantiate the regressor
+    gb = GradientBoostingClassifier()
+    # Perform random search
+    gb_random = GridSearchCV(
+        param_grid=gb_param_grid,
+        estimator=gb,
+        scoring="accuracy",
+        verbose=3,
+        n_jobs=-1,
+        cv=4)
+    # Fit randomized_mse to the data
+    gb_random.fit(X, y)
+    # Print the best parameters and lowest RMSE
+    return gb_random.best_params_
+
+def gb_optimized_train_test_upd(X_train, t_train, X_test, t_test):
+    '''
+    Train a gradient boosting classifier on (X_train, t_train)
+    and evaluate it on (X_test, t_test) with
+    your own optimized parameters
+    '''
+    params = param_search_upd(X_train, t_train)
+    gb_classifier = GradientBoostingClassifier(n_estimators=params['n_estimators'], max_depth=params['max_depth'], learning_rate=params['learning_rate'])
+    gb_classifier.fit(X_train, t_train)
+
+    predictions = gb_classifier.predict(X_test)
+
+    accuracy = accuracy_score(t_test, predictions)
+    precision = precision_score(t_test, predictions)
+    recall = recall_score(t_test, predictions)
+
+    return (accuracy, precision, recall)
+
+def _create_submission_upd():
+    '''Create your kaggle submission
+    '''
+    (tr_X, tr_y), (tst_X, tst_y), submission_X = get_better_titanic()
+    params = param_search_upd(tr_X, tr_y)
     gb_classifier = GradientBoostingClassifier(n_estimators=params['n_estimators'], max_depth=params['max_depth'], learning_rate=params['learning_rate'])
     gb_classifier.fit(tr_X, tr_y)
 

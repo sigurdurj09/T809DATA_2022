@@ -1,8 +1,10 @@
 # Author: Sigurður Ágúst Jakobsson
-# Date:
+# Date: 23.10.22
 # Project: Random Forests
 # Acknowledgements: 
-#
+# Sklearn, matplotlib and other library documentation online
+# Discussed solution strategies with Gylfi Andrésson
+# Used split_train_test from previous assignments tools as help for independent section.
 
 # NOTE: Your code should NOT contain any main functions or code that is executed
 # automatically.  We ONLY want the functions as stated in the README.md.
@@ -253,7 +255,7 @@ def _test_2_1():
             
             pre = cc.precision()
             if pre > best_pre:
-                best_pre = acc
+                best_pre = pre
                 best_pre_features = max_feature_array[feature] 
                 best_pre_n = n_estimator_array[estimator]  
             
@@ -265,7 +267,7 @@ def _test_2_1():
 
             cva = cc.cross_validation_accuracy()
             if cva > best_cva:
-                best_cva = acc
+                best_cva = cva
                 best_cva_features = max_feature_array[feature] 
                 best_cva_n = n_estimator_array[estimator]  
             
@@ -298,4 +300,101 @@ def _test_2_1():
     print('Value:', best_cva)
     print('Max Features:', best_cva_features)
     print('N Estimators:', best_cva_n)
+
+
+def x_fold_split(features: np.ndarray, targets: np.ndarray, x: int):
+    '''Shuffle the features and targets in unison. Split into x sections for cross validation.'''
+
+    #Standard code from split_train_test
+    p = np.random.permutation(features.shape[0])
+    features = features[p]
+    targets = targets[p]
+
+    section_len = features.shape[0] // x
+
+    feature_data_splits = []
+    target_data_splits = []
+
+    for section in range(x):
+        if section == x-1:            
+            features_sec, targets_sec = features[section_len*section:, :], targets[section_len*section:]
+        else: 
+            features_sec, targets_sec = features[section_len*section:section_len*(section+1), :], targets[section_len*section:section_len*(section+1)]
+
+        feature_data_splits.append(features_sec)
+        target_data_splits.append(targets_sec)
+
+    return feature_data_splits, target_data_splits
+
+def _indep():
+    cancer = load_breast_cancer() #D=30
+    X = cancer.data  # all feature vectors
+    t = cancer.target  # all corresponding labels
+
+    validation_fold = 10
+
+    feature_data_splits, target_data_splits = x_fold_split(X, t, validation_fold)
+
+    #Parameters to test
+    runs = [(100, 4), (80, 6)]
+
+    for i in runs:
+        
+        accuracies = []
+        precisions = []
+        recalls = []
+        cms = []
+
+        my_classifier = RandomForestClassifier(n_estimators=i[0], max_features=i[1])
+
+        #Calculate stats for each fold
+        for fold in range(validation_fold):
+            test_X = feature_data_splits[fold]
+            test_t = target_data_splits[fold]
+
+            #Make arrays
+            if fold == 0:
+                train_x = feature_data_splits[1]
+                train_t = target_data_splits[1]
+                for others in range(2, validation_fold):
+                    train_x = np.append(train_x, feature_data_splits[others], axis=0)
+                    train_t = np.append(train_t, target_data_splits[others], axis=0)
+            else:
+                train_x = feature_data_splits[0]
+                train_t = target_data_splits[0]
+                for others in range(1, validation_fold):
+                    if fold != others:
+                        train_x = np.append(train_x, feature_data_splits[others], axis=0)
+                        train_t = np.append(train_t, target_data_splits[others], axis=0)            
+
+            #Train, predict and analyze for fold
+            my_classifier.fit(train_x, train_t)
+            predictions = my_classifier.predict(test_X)
+            
+            accuracies.append(accuracy_score(test_t, predictions))
+            precisions.append(precision_score(test_t, predictions))
+            recalls.append(recall_score(test_t, predictions))
+            cms.append(confusion_matrix(test_t, predictions))
+
+        #Calculate mean for run
+        mean_accuracy = 0
+        mean_precision = 0
+        mean_recall = 0
+        mean_cm = 0
+
+        for fold in range(validation_fold):
+            mean_accuracy += accuracies[fold] / validation_fold
+            mean_precision += precisions[fold] / validation_fold
+            mean_recall += recalls[fold] / validation_fold
+            mean_cm += cms[fold] / validation_fold
+
+        #Print run stats
+        print('\nRun - n_estimators:', i[0], ', max_features:', i[1])
+        print('Cross Validation Accuracy:', mean_accuracy)
+        print('Cross Validation Precision:', mean_precision)
+        print('Cross Validation Recall:', mean_recall)
+        print('Cross Validation CM:', mean_cm)
+
+
+
 

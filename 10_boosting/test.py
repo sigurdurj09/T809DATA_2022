@@ -34,15 +34,22 @@ print('Test 2.4')
 
 
 print('Test 2.5')
-params = sol.param_search(tr_X, tr_y)
-print(params)
+#params = sol.param_search(tr_X, tr_y)
+#print(params)
 
 print('Test 2.6')
-stats = sol.gb_optimized_train_test(tr_X, tr_y, tst_X, tst_y)
-print(stats)
+#stats = sol.gb_optimized_train_test(tr_X, tr_y, tst_X, tst_y)
+#print(stats)
+
+#params = sol.param_search_upd(tr_X, tr_y)
+#print(params)
+
+#stats = sol.gb_optimized_train_test_upd(tr_X, tr_y, tst_X, tst_y)
+#print('Updated GB opt:', stats)
 
 print('Test 3.1')
-sol._create_submission()
+#sol._create_submission()
+sol._create_submission_upd()
 
 print('Test 3.2')
 

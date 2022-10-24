@@ -26,7 +26,7 @@ print('Test 1.2')
 
 
 print('Test 2.1')
-#sol._test_2_1()
+sol._test_2_1()
 
 print('Test 2.2')
 
@@ -68,6 +68,7 @@ print('Test 3.2')
 sol._plot_extreme_oob_error()
 
 print('Test Independent')
+sol._indep()
 
 
 
