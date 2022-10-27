@@ -1,6 +1,6 @@
-# Author: 
+# Author: Sigurður Ágúst Jakobsson
 # Date:
-# Project: 
+# Project: 12 - Principal Component Analysis
 # Acknowledgements: 
 #
 
@@ -28,7 +28,10 @@ def standardize(X: np.ndarray) -> np.ndarray:
     (np.ndarray): A standardized version of X, also
     of shape [N x 1]
     '''
-    ...
+    mean = np.mean(X, axis=0)
+    sd = np.std(X, axis=0)
+
+    return (X - mean) / sd
 
 
 def scatter_standardized_dims(
@@ -45,41 +48,83 @@ def scatter_standardized_dims(
     * i (int): The first index
     * j (int): The second index
     '''
-    ...
-
+    X_hat = standardize(X)
+    plt.scatter(X_hat[:, i], X_hat[:, j])
 
 def _scatter_cancer():
     X, y = load_cancer()
-    ...
 
+    for i in range(30):
+        plt.subplot(5, 6, i+1)
+        plt.scatter(X[:, 0], X[:, i])
+
+    plt.show()
 
 def _plot_pca_components():
-    ...
+    
+    pca = PCA()
+    D = 30
+    pca.n_components = D
     X, y = load_cancer()
-    for i in range(...):
-        plt.subplot(5, 6, ...)
-        ...
+    pca.fit_transform(X)
+
+    components = pca.components_
+
+    print(components)
+
+    for i in range(D):
+        plt.subplot(5, 6, i+1)
+        plt.plot(components[i, :])
+        plt.title("PCA " + str(i+1))
     plt.show()
 
 
 def _plot_eigen_values():
-    ...
+    
+    pca = PCA()
+    D = 30
+    pca.n_components = D
+    X, y = load_cancer()
+    pca.fit_transform(X)
+    
+    x = list(range(1, 31))
+
+    plt.plot(x, pca.explained_variance_)
+
     plt.xlabel('Eigenvalue index')
     plt.ylabel('Eigenvalue')
     plt.grid()
     plt.show()
 
-
 def _plot_log_eigen_values():
-    ...
+    
+    pca = PCA()
+    D = 30
+    pca.n_components = D
+    X, y = load_cancer()
+    pca.fit_transform(X)
+    
+    x = list(range(1, 31))
+
+    plt.plot(x, np.log10(pca.explained_variance_))
+
     plt.xlabel('Eigenvalue index')
     plt.ylabel('$\log_{10}$ Eigenvalue')
     plt.grid()
     plt.show()
 
-
 def _plot_cum_variance():
-    ...
+    
+    pca = PCA()
+    D = 30
+    pca.n_components = D
+    X, y = load_cancer()
+    pca.fit_transform(X)
+    
+    x = list(range(1, 31))
+
+    plt.plot(x, np.cumsum(pca.explained_variance_) / np.sum(pca.explained_variance_))
+
     plt.xlabel('Eigenvalue index')
     plt.ylabel('Percentage variance')
     plt.grid()

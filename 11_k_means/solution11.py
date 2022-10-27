@@ -97,7 +97,7 @@ def determine_j(R: np.ndarray, dist: np.ndarray) -> float:
     #J= sum(N)sum(K) r_nk * ||x_n - Mu_k||**2
 
     #Oneliner - filter out relevant distances, square them and sum
-    return ((R * dist)**2).sum()
+    return ((R * dist)).sum() / R.shape[0]
 
 
 def update_Mu(

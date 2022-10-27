@@ -68,11 +68,11 @@ print(sol.k_means(X, 4, 10))
 
 print('Test 1.6')
 
-#sol._plot_j()
+sol._plot_j()
 
 print('Test 1.7')
 
-#sol._plot_multi_j()
+sol._plot_multi_j()
 
 print('Test 1.8')
 
@@ -89,12 +89,12 @@ print(sol._iris_kmeans_accuracy())
 
 print('Test 2.1')
 
-#print(sol._my_kmeans_on_image())
+print(sol._my_kmeans_on_image())
 
-# num_clusters = [2, 5, 10, 20]
+num_clusters = [2, 5, 10, 20]
 
-# for num in num_clusters:
-#     sol.plot_image_clusters(num)
+for num in num_clusters:
+    sol.plot_image_clusters(num)
 
 print('Test 3.1')
 sol._gmm_info()
