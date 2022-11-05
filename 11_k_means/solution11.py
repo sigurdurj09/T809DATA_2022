@@ -166,6 +166,7 @@ def _plot_j():
     X, y, c = load_iris()
     its = 10
     Mu, R, Js = k_means(X, 4, its)
+    #Mu, R, Js = k_means(X, X.shape[0], its) #Testing for 1.8
 
     x = list(range(its))
 
@@ -235,7 +236,7 @@ def _iris_kmeans_accuracy():
     X, y, c = load_iris()
     predictions = k_means_predict(X, y, c, 5)
     
-    return accuracy_score(y, predictions)
+    return accuracy_score(y, predictions), confusion_matrix(y, predictions)
 
 
 def _my_kmeans_on_image():

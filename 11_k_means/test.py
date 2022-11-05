@@ -89,7 +89,7 @@ print(sol._iris_kmeans_accuracy())
 
 print('Test 2.1')
 
-print(sol._my_kmeans_on_image())
+#print(sol._my_kmeans_on_image())
 
 num_clusters = [2, 5, 10, 20]
 

@@ -2,7 +2,7 @@
 # Date:
 # Project: 12 - Principal Component Analysis
 # Acknowledgements: 
-#
+# Documentation for sklearn, numpy and matplotlib
 
 # NOTE: Your code should NOT contain any main functions or code that is executed
 # automatically.  We ONLY want the functions as stated in the README.md.
